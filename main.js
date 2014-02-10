@@ -14,7 +14,6 @@ var timer = {
 		if(that.blocked.indexOf(name) !== -1 || that.delayed){
 			return;
 		}
-		
 		that.stack.push({
 			name: name,
 			over: over,
@@ -26,13 +25,13 @@ var timer = {
 			that.runs[runID] = [];
 			that.running.push(runID);
 		}
+		return this;
 	},
 	finish: function(name){
 		var that = this;
 		if(that.blocked.indexOf(name) !== -1 || that.delayed){
 			return;
 		}
-		
 		var result = that.stack.pop();
 		if(result === undefined){
 			return;
@@ -59,6 +58,15 @@ var timer = {
 			that.log.push(name + ": " + delta + "ms");
 			that.displayResults();
 		}
+		return this;
+	},
+	begin: function(){
+		this.delayed = false;
+		return this;
+	},
+	stop: function(){
+		this.delayed = true;
+		return this;
 	},
 	displayResults: function(){
 		var that = this;
@@ -70,6 +78,7 @@ var timer = {
 				that.queuedDisplay = false;
 			}, 0);
 		}
+		return this;
 	}
 };
 timer.reset();
